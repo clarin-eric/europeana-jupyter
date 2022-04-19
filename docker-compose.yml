@@ -10,6 +10,7 @@ services:
     volumes:
       - "work:/home/jovyan/work"
       - "${DATA_VOLUME:-data}:/home/jovyan/work/data:ro"
+      - "./examples:/home/jovyan/work/examples:ro"
 volumes:
   work:
     external: false
