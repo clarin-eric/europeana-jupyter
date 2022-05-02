@@ -2,7 +2,7 @@ version: '2.3'
 
 services:
   jupyterhub:
-    image: registry.gitlab.com/twagoo/docker-jupyterhub:1.0.0-alpha2
+    image: registry.gitlab.com/twagoo/docker-jupyterhub:1.0.0-alpha5
     ports:
       - ${EXTERNAL_PORT:-88}:8000
     container_name: jupyterhub-container
@@ -15,9 +15,12 @@ services:
       DOCKER_JUPYTER_IMAGE: jupyter/tensorflow-notebook
       DOCKER_NETWORK_NAME: ${COMPOSE_PROJECT_NAME}_default
       HUB_IP: jupyterhub
-      SHARED_DATA_VOLUME: ${SHARED_DATA_VOLUME:-}
+      DATA_VOLUME: ${DATA_VOLUME:-jupyterhub_data}
+      SHARED_VOLUME: ${SHARED_VOLUME:-jupyterhub_shared}
       JUPYTER_HUB_CREDENTIALS: ${JUPYTER_HUB_CREDENTIALS:-}
+      JUPYTER_HUB_ADMIN_USER=admin: ${JUPYTER_HUB_ADMIN_USER:-admin}
 
 volumes:
   jupyterhub_data:
+  jupyterhub_shared:
   jupyterhub_auth:
