@@ -2,7 +2,7 @@ version: '2.3'
 
 services:
   jupyterhub:
-    image: registry.gitlab.com/clarin-eric/docker-jupyterhub:1.0.0
+    image: registry.gitlab.com/clarin-eric/docker-jupyterhub:1.1.0
     ports:
       - ${EXTERNAL_PORT:-88}:8000
     container_name: jupyterhub-container
@@ -12,15 +12,17 @@ services:
       - jupyterhub_auth:/srv/jupyterhub/config/users
     environment:
       DOCKER_JUPYTER_CONTAINER: jupyter-notebook
-      DOCKER_JUPYTER_IMAGE: jupyter/tensorflow-notebook
+      DOCKER_JUPYTER_IMAGE: ${DOCKER_JUPYTER_IMAGE:-jupyter/tensorflow-notebook}
       DOCKER_NETWORK_NAME: ${COMPOSE_PROJECT_NAME}_default
       HUB_IP: jupyterhub
       DATA_VOLUME: ${DATA_VOLUME:-jupyterhub_data}
       SHARED_VOLUME: ${SHARED_VOLUME:-jupyterhub_shared}
+      EXAMPLES_VOLUME: ${EXAMPLES_VOLUME:-jupyterhub-examples}
       JUPYTER_HUB_CREDENTIALS: ${JUPYTER_HUB_CREDENTIALS:-}
       JUPYTER_HUB_ADMIN_USER=admin: ${JUPYTER_HUB_ADMIN_USER:-admin}
 
 volumes:
   jupyterhub_data:
   jupyterhub_shared:
+  jupyterhub-examples:
   jupyterhub_auth:
