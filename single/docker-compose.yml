@@ -9,7 +9,7 @@ services:
       - ${EXTERNAL_PORT:-8888}:8888
     volumes:
       - "${NOTEBOOK_VOLUME:-work}:/home/jovyan"
-      - "${DATA_VOLUME:-data}:/home/jovyan/data:ro"
+      - "${DATA_VOLUME:-data}:/home/jovyan/data"
 volumes:
   work:
     external: false
