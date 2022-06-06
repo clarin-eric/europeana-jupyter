@@ -4,13 +4,12 @@ services:
     image: jupyter/tensorflow-notebook
     environment:
       - JUPYTER_TOKEN=${JUPYTER_TOKEN?err}
-    working_dir: /home/jovyan/work
+    working_dir: /home/jovyan
     ports:
       - ${EXTERNAL_PORT:-8888}:8888
     volumes:
-      - "work:/home/jovyan/work"
-      - "${DATA_VOLUME:-data}:/home/jovyan/work/data:ro"
-      - "./examples:/home/jovyan/work/examples:ro"
+      - "${NOTEBOOK_VOLUME:-work}:/home/jovyan"
+      - "${DATA_VOLUME:-data}:/home/jovyan/data:ro"
 volumes:
   work:
     external: false
