@@ -4,6 +4,7 @@ set -e
 NOTEBOOK_IMAGE_NAME='europena-newspapers'
 
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && pwd 2> /dev/null; )";
+
 (cd "${SCRIPT_DIR}/europeana-notebooks-image" && \
 	docker build -t repo2docker-builder:latest .)
 
@@ -26,4 +27,7 @@ if ! docker exec "${CONTAINER_ID}" jupyter-repo2docker \
 	docker stop "${CONTAINER_ID}"
 	exit 1
 fi
+
+docker exec "${CONTAINER_ID}" docker save "${NOTEBOOK_IMAGE_NAME}:latest" | docker load
+
 docker stop "${CONTAINER_ID}"
