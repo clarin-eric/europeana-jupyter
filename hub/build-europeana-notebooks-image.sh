@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 
+NOTEBOOK_IMAGE_NAME="${JR2D_IMAGE_NAME:-europena-newspapers}"
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && pwd 2> /dev/null; )";
 
 (cd "${SCRIPT_DIR}/europeana-notebooks-image" && \
@@ -20,7 +21,7 @@ done
 
 if ! docker exec "${CONTAINER_ID}" jupyter-repo2docker \
 	--no-run \
-	--image-name "${JR2D_IMAGE_NAME:-europena-newspapers}" \
+	--image-name "${NOTEBOOK_IMAGE_NAME}" \
 	--user-id "${JR2D_USER_ID:-1000}" \
 	--user-name "${JR2D_USERNAME:-jovyan}" \
 	--ref  "${JR2D_REF:-main}" \
