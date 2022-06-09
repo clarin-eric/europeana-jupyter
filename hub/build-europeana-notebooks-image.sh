@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-NOTEBOOK_IMAGE_NAME='europena-newspapers'
-
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && pwd 2> /dev/null; )";
 
 (cd "${SCRIPT_DIR}/europeana-notebooks-image" && \
@@ -21,8 +19,12 @@ while ! docker inspect "${CONTAINER_ID}"|grep '"Status": "running"'; do
 done
 
 if ! docker exec "${CONTAINER_ID}" jupyter-repo2docker \
-	--no-run --image-name "${NOTEBOOK_IMAGE_NAME}" --user-id 1000 --user-name jovyan \
-	'https://github.com/clarin-eric/europeana-newspapers-notebooks'; then
+	--no-run \
+	--image-name "${JR2D_IMAGE_NAME:-europena-newspapers}" \
+	--user-id "${JR2D_USER_ID:-1000}" \
+	--user-name "${JR2D_USERNAME:-jovyan}" \
+	--ref  "${JR2D_REF:-main}" \
+	"${JR2D_REPO:-https://github.com/clarin-eric/europeana-newspapers-notebooks}"; then
 	echo 'Failed to build the image'
 	docker stop "${CONTAINER_ID}"
 	exit 1
