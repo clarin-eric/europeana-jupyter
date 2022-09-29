@@ -2,7 +2,7 @@ version: '2.3'
 
 services:
   jupyterhub:
-    image: registry.gitlab.com/clarin-eric/docker-jupyterhub:1.2.0
+    image: registry.gitlab.com/clarin-eric/docker-jupyterhub:1.2.1
     ports:
       - ${EXTERNAL_PORT:-88}:8000
     container_name: jupyterhub-container
